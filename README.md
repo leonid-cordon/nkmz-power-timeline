@@ -40,5 +40,6 @@
    - **Branch**: `main` и папка `/ (root)`;
    - сохраните настройки.
 
-3. Через некоторое время GitHub выдаст URL вида:
+3. После включения GitHub Pages дашборд будет доступен по адресу:
+https://leonid-cordon.github.io/nkmz-power-timeline/nkmz_power_outages.html
 
