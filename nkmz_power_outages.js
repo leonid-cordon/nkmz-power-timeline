@@ -225,6 +225,12 @@
         const hoursText = formatHoursShort(ys.totalMinutes) + " ч";
         meta.textContent =
           `${formatAccidentPhrase(ys.totalOutages)} · ${hoursText}`;
+
+        // год, где есть аварийные отключения
+        if (ys.totalMinutes > 0 || ys.totalOutages > 0) {
+          pill.classList.add("has-outages");
+        }
+
         if (y === currentYear) pill.classList.add("active");
         pill.addEventListener("click", () => onYearSelected(y));
       } else if (maxYearWithData !== null && y > maxYearWithData) {
@@ -330,12 +336,29 @@
         metaEl.textContent =
           `${formatAccidentPhrase(ms.outageCount)} · ${hoursText}`;
         metaEl.classList.add("alert");
+
+        // честная полоска: доля часов без питания от всего месяца
+        const bar = document.createElement("div");
+        bar.classList.add("month-bar");
+
+        const fill = document.createElement("div");
+        fill.classList.add("month-bar-fill");
+
+        const daysInMonth = getDaysInMonth(currentYear, m);
+        const maxMinutesMonth = daysInMonth * 24 * 60; // теоретический максимум
+        let percent = (ms.totalMinutes / maxMinutesMonth) * 100;
+        if (percent < 0) percent = 0;
+        if (percent > 100) percent = 100;
+        fill.style.width = percent.toFixed(2) + "%";
+
+        bar.appendChild(fill);
+        card.appendChild(metaEl);
+        card.appendChild(bar);
       } else {
         metaEl.textContent = "нет отключений";
+        card.appendChild(metaEl);
         card.classList.add("no-data");
       }
-
-      card.appendChild(metaEl);
 
       if (currentMonth === m) {
         card.classList.add("active");
@@ -564,7 +587,7 @@
     oldSegments.forEach((seg) => seg.remove());
     marksEl.innerHTML = "";
 
-    // отметки по часам
+    // отметки по часам (0..24)
     for (let h = 0; h <= 24; h++) {
       const mark = document.createElement("div");
       mark.classList.add("day-timeline-hour-mark");
@@ -780,5 +803,10 @@
     }
 
     return `${n} ${word}`;
+  }
+
+  function getDaysInMonth(year, month) {
+    // month: 1..12
+    return new Date(year, month, 0).getDate();
   }
 })();
