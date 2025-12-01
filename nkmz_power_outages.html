@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Статистика отключения питания — серверная NKMZ</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #111;
+      color: #f5f5f5;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px 32px;
+    }
+
+    /* 1. ШАПКА */
+
+    header {
+      margin-bottom: 16px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 8px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    header .subtitle {
+      margin-top: 4px;
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    header .summary {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    /* 2. ПОЛОСА ГОДОВ */
+
+    #year-strip {
+      margin-top: 16px;
+      padding: 8px 0;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      border-bottom: 1px solid #333;
+    }
+
+    .year-pill {
+      flex: 0 0 auto;
+      min-width: 70px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #444;
+      text-align: center;
+      font-size: 13px;
+      cursor: pointer;
+      background: #1b1b1b;
+      color: #ddd;
+    }
+
+    .year-pill.future {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    .year-pill.no-data {
+      opacity: 0.6;
+    }
+
+    .year-pill .year-label {
+      font-weight: 600;
+      display: block;
+    }
+
+    .year-pill .year-meta {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 2px;
+    }
+
+    .year-pill.active {
+      border-color: #4caf50;
+      box-shadow: 0 0 0 1px #4caf50;
+      background: #1e2b1f;
+      color: #e8ffe8;
+    }
+
+    /* 3. СВОДКА ПО ГОДУ + МЕСЯЦЫ */
+
+    #year-summary {
+      margin-top: 16px;
+      padding: 8px 0 4px;
+      font-size: 14px;
+      border-bottom: 1px solid #333;
+    }
+
+    #year-summary h2 {
+      margin: 0 0 4px;
+      font-size: 18px;
+    }
+
+    #year-stats {
+      font-size: 13px;
+      color: #ccc;
+    }
+
+    #month-strip {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .month-card {
+      padding: 6px 8px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      background: #181818;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .month-card.no-data {
+      opacity: 0.5;
+    }
+
+    .month-card.active {
+      border-color: #ff9800;
+      box-shadow: 0 0 0 1px #ff9800;
+      background: #2b2115;
+    }
+
+    .month-name {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .month-meta {
+      color: #aaa;
+      font-size: 11px;
+    }
+
+    /* оранжевая подсветка месяцев с авариями */
+    .month-meta.alert {
+      color: #ffb74d;
+    }
+
+    /* 4. КАЛЕНДАРЬ */
+
+    #calendar-block {
+      margin-top: 20px;
+    }
+
+    #calendar-block h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 4px;
+      font-size: 11px;
+    }
+
+    .calendar-weekday {
+      text-align: center;
+      font-weight: 600;
+      color: #bbb;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #333;
+    }
+
+    /* выходные в шапке календаря */
+    .calendar-weekday.weekend {
+      color: #ffb74d;
+    }
+
+    .calendar-day {
+      min-height: 60px;
+      border-radius: 8px;
+      padding: 4px 5px;
+      border: 1px solid #222;
+      background: #151515;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .calendar-day.empty {
+      background: transparent;
+      border: none;
+      cursor: default;
+    }
+
+    /* выходные дни */
+    .calendar-day-weekend {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: #2f3c55;
+    }
+
+    .calendar-day-number {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .calendar-day.has-outage {
+      border-color: #e53935;
+      background: #261616;
+    }
+
+    .calendar-day.calendar-day-weekend.has-outage {
+      background: #3a2626;
+      border-color: #ff7043;
+    }
+
+    .calendar-day.active {
+      outline: 1px solid #ffeb3b;
+    }
+
+    .calendar-day-meta {
+      margin-top: 2px;
+      font-size: 10px;
+      color: #ccc;
+    }
+
+    /* мини-шкала 0–24 ч в каждой ячейке дня */
+    .calendar-day-mini-axis {
+      position: relative;
+      margin-top: 4px;
+      height: 6px;
+      border-radius: 3px;
+      background: #0b1a0b;
+      overflow: hidden;
+    }
+
+    .calendar-day-mini-base {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, #1b3a1b, #142814);
+      opacity: 0.9;
+    }
+
+    .calendar-day-mini-outage {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background: #e53935;
+      opacity: 0.95;
+    }
+
+    /* 5. ГИСТОГРАММА ПО МЕСЯЦУ (пока заглушка) */
+
+    #month-histogram {
+      margin-top: 16px;
+      font-size: 12px;
+      color: #aaa;
+      border-top: 1px dashed #333;
+      padding-top: 8px;
+    }
+
+    /* 6. ДЕТАЛЬ ДНЯ + ГРАФИК */
+
+    #day-detail {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid #333;
+    }
+
+    #day-detail h3 {
+      margin: 0 0 4px;
+      font-size: 16px;
+    }
+
+    #day-summary {
+      font-size: 13px;
+      color: #ccc;
+      margin-bottom: 10px;
+    }
+
+    .day-timeline-wrapper {
+      position: relative;
+      margin-top: 8px;
+      padding: 12px 4px 4px;
+      background: #151515;
+      border-radius: 10px;
+      border: 1px solid #333;
+    }
+
+    .day-timeline-axis {
+      position: relative;
+      height: 30px;
+      background: #102010;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .day-timeline-axis-base {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, #204020, #163016);
+    }
+
+    .day-timeline-outage {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background: #e53935;
+      opacity: 0.9;
+    }
+
+    .day-timeline-hour-marks {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .day-timeline-hour-mark {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .day-timeline-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+      font-size: 10px;
+      color: #aaa;
+    }
+
+    .day-timeline-hover {
+      margin-top: 4px;
+      font-size: 11px;
+      color: #ccc;
+    }
+
+    .day-timeline-note {
+      margin-top: 6px;
+      font-size: 11px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- 1. ШАПКА -->
+    <header>
+      <h1>Статистика отключения питания — серверная NKMZ</h1>
+      <div class="subtitle">
+        Источник: журнал событий Windows (SRV3, лог System)
+      </div>
+      <div class="summary">
+        Период данных: 2015–2025 · Последнее обновление: 01.12.2025 23:10
+      </div>
+    </header>
+
+    <!-- 2. ПОЛОСА ГОДОВ (JS всё подставит) -->
+    <section id="year-strip"></section>
+
+    <!-- 3. СВОДКА ПО ГОДУ + МЕСЯЦЫ -->
+    <section id="year-summary">
+      <h2 id="year-title">Год</h2>
+      <div id="year-stats">
+        Загрузка статистики...
+      </div>
+
+      <div id="month-strip">
+        <!-- Карточки месяцев создаст JS -->
+      </div>
+    </section>
+
+    <!-- 4. КАЛЕНДАРЬ МЕСЯЦА -->
+    <section id="calendar-block">
+      <h3 id="calendar-title">Календарь</h3>
+      <div class="calendar-grid" id="calendar-grid">
+        <!-- Дни недели и дни месяца создаст JS -->
+      </div>
+    </section>
+
+    <!-- 5. ГИСТОГРАММА МЕСЯЦА (пока текст) -->
+    <section id="month-histogram">
+      Здесь позже будет гистограмма по дням месяца (1–30/31) с высотой столбцов по часам без питания.
+    </section>
+
+    <!-- 6. ДЕТАЛИ ДНЯ + ГРАФИК 0–24 -->
+    <section id="day-detail">
+      <h3 id="day-title">Детализация дня</h3>
+      <div id="day-summary">
+        Выберите день с отключениями в календаре.
+      </div>
+
+      <div class="day-timeline-wrapper">
+        <div class="day-timeline-axis" id="day-timeline-axis">
+          <div class="day-timeline-axis-base"></div>
+          <div class="day-timeline-hour-marks" id="day-timeline-hour-marks"></div>
+        </div>
+
+        <div class="day-timeline-labels">
+          <span>0:00</span>
+          <span>6:00</span>
+          <span>12:00</span>
+          <span>18:00</span>
+          <span>24:00</span>
+        </div>
+
+        <div class="day-timeline-hover" id="day-timeline-hover">
+          Наведите курсор на шкалу, чтобы увидеть точное время и состояние.
+        </div>
+
+        <div class="day-timeline-note">
+          Зелёная полоса — время с питанием. Красные сегменты появятся при выборе дня с отключениями.
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="nkmz_power_outages.js"></script>
+</body>
+</html>
