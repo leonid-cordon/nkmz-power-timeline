@@ -3,6 +3,8 @@
 
 (function () {
   const DATA_URL = "power_stats_all_years.json";
+  const LAST_UPDATE_FILE = "last_update.txt";  // файл с датой последнего экспорта SRV3
+
   const YEARS_START = 2015;
   const YEARS_END = 2030;
 
@@ -16,24 +18,30 @@
   let currentMonth = null;   // 1..12
   let currentDayKey = null;  // "YYYY-MM-DD"
 
-  document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", init);
 
-  function init() {
-    fetch(DATA_URL)
-      .then((resp) => resp.json())
-      .then((data) => {
-        rawAllData = data;
-        prepareDataFromAllYears();
-        renderAll();
-        setupTimelineHover();
-      })
-      .catch((err) => {
-        console.error("Ошибка загрузки данных", err);
-        showError(
-          'Не удалось загрузить данные. Проверьте файл "power_stats_all_years.json".'
-        );
-      });
-  }
+function init() {
+  // 1) сразу подтягиваем время последнего экспорта из last_update.txt
+  loadLastUpdateLabel();
+
+  // 2) как и раньше — грузим JSON с интервалами
+  fetch(DATA_URL)
+    .then((resp) => resp.json())
+    .then((data) => {
+      rawAllData = data;
+      prepareDataFromAllYears();
+      renderAll();
+      setupTimelineHover();
+    })
+    .catch((err) => {
+      console.error("Ошибка загрузки данных", err);
+      showError(
+        'Не удалось загрузить данные. Проверьте файл "power_stats_all_years.json".'
+      );
+    });
+}
+
+
 
   function showError(msg) {
     const yearStatsEl = document.getElementById("year-stats");
@@ -41,6 +49,38 @@
   }
 
   // ==== ПОДГОТОВКА ДАННЫХ ПО ВСЕМ ГОДАМ ====
+
+  function loadLastUpdateLabel() {
+  const span = document.getElementById("last-updated");
+  if (!span) return;
+
+  fetch(LAST_UPDATE_FILE)
+    .then((resp) => {
+      if (!resp.ok) {
+        throw new Error("HTTP " + resp.status);
+      }
+      return resp.text();
+    })
+    .then((text) => {
+      // Пытаемся вытащить из строки хвост вида:
+      // 02.12.2025 21:49:00,38
+      const m = text.match(
+        /(\d{2}\.\d{2}\.\d{4}\s+\d{2}:\d{2}(:\d{2})?(?:[.,]\d+)?)\s*$/
+      );
+      if (m) {
+        // Заменим запятую на точку, чтобы смотрелось аккуратнее
+        span.textContent = m[1].replace(",", ".");
+      } else {
+        // Если формат когда-нибудь поменяем — просто покажем весь текст
+        span.textContent = text.trim();
+      }
+    })
+    .catch((err) => {
+      console.warn("Не удалось прочитать last_update.txt:", err);
+      span.textContent = "нет данных";
+    });
+}
+
 
   function prepareDataFromAllYears() {
     if (!rawAllData || !rawAllData.years) {
@@ -225,12 +265,6 @@
         const hoursText = formatHoursShort(ys.totalMinutes) + " ч";
         meta.textContent =
           `${formatAccidentPhrase(ys.totalOutages)} · ${hoursText}`;
-
-        // год, где есть аварийные отключения
-        if (ys.totalMinutes > 0 || ys.totalOutages > 0) {
-          pill.classList.add("has-outages");
-        }
-
         if (y === currentYear) pill.classList.add("active");
         pill.addEventListener("click", () => onYearSelected(y));
       } else if (maxYearWithData !== null && y > maxYearWithData) {
@@ -336,29 +370,12 @@
         metaEl.textContent =
           `${formatAccidentPhrase(ms.outageCount)} · ${hoursText}`;
         metaEl.classList.add("alert");
-
-        // честная полоска: доля часов без питания от всего месяца
-        const bar = document.createElement("div");
-        bar.classList.add("month-bar");
-
-        const fill = document.createElement("div");
-        fill.classList.add("month-bar-fill");
-
-        const daysInMonth = getDaysInMonth(currentYear, m);
-        const maxMinutesMonth = daysInMonth * 24 * 60; // теоретический максимум
-        let percent = (ms.totalMinutes / maxMinutesMonth) * 100;
-        if (percent < 0) percent = 0;
-        if (percent > 100) percent = 100;
-        fill.style.width = percent.toFixed(2) + "%";
-
-        bar.appendChild(fill);
-        card.appendChild(metaEl);
-        card.appendChild(bar);
       } else {
         metaEl.textContent = "нет отключений";
-        card.appendChild(metaEl);
         card.classList.add("no-data");
       }
+
+      card.appendChild(metaEl);
 
       if (currentMonth === m) {
         card.classList.add("active");
@@ -587,7 +604,7 @@
     oldSegments.forEach((seg) => seg.remove());
     marksEl.innerHTML = "";
 
-    // отметки по часам (0..24)
+    // отметки по часам
     for (let h = 0; h <= 24; h++) {
       const mark = document.createElement("div");
       mark.classList.add("day-timeline-hour-mark");
@@ -804,9 +821,22 @@
 
     return `${n} ${word}`;
   }
+    function setLastUpdatedFromHeader(lastModifiedHeader) {
+    const el = document.getElementById("last-updated");
+    if (!el || !lastModifiedHeader) return;
 
-  function getDaysInMonth(year, month) {
-    // month: 1..12
-    return new Date(year, month, 0).getDate();
+    const dt = new Date(lastModifiedHeader);
+    if (isNaN(dt.getTime())) return;
+
+    el.textContent = formatDateTimeShort(dt);
+  }
+
+  function formatDateTimeShort(dt) {
+    const dd = String(dt.getDate()).padStart(2, "0");
+    const mm = String(dt.getMonth() + 1).padStart(2, "0");
+    const yyyy = dt.getFullYear();
+    const hh = String(dt.getHours()).padStart(2, "0");
+    const mn = String(dt.getMinutes()).padStart(2, "0");
+    return `${dd}.${mm}.${yyyy} ${hh}:${mn}`;
   }
 })();
