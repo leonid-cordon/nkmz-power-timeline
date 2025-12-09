@@ -3,7 +3,7 @@
 
 (function () {
   const DATA_URL = "power_stats_all_years.json";
-  const LAST_UPDATE_FILE = "last_update.txt";  // файл с датой последнего экспорта SRV3
+  const LAST_UPDATE_FILE = "last_update.txt";
 
   const YEARS_START = 2015;
   const YEARS_END = 2030;
@@ -18,69 +18,60 @@
   let currentMonth = null;   // 1..12
   let currentDayKey = null;  // "YYYY-MM-DD"
 
-document.addEventListener("DOMContentLoaded", init);
+  document.addEventListener("DOMContentLoaded", init);
 
-function init() {
-  // 1) сразу подтягиваем время последнего экспорта из last_update.txt
-  loadLastUpdateLabel();
+  function init() {
+    // 1) сразу подтягиваем время последнего экспорта из last_update.txt
+    loadLastUpdateLabel();
 
-  // 2) как и раньше — грузим JSON с интервалами
-  fetch(DATA_URL)
-    .then((resp) => resp.json())
-    .then((data) => {
-      rawAllData = data;
-      prepareDataFromAllYears();
-      renderAll();
-      setupTimelineHover();
-    })
-    .catch((err) => {
-      console.error("Ошибка загрузки данных", err);
-      showError(
-        'Не удалось загрузить данные. Проверьте файл "power_stats_all_years.json".'
-      );
-    });
-}
-
-
+    // 2) как и раньше — грузим JSON с интервалами
+    fetch(DATA_URL)
+      .then((resp) => resp.json())
+      .then((data) => {
+        rawAllData = data;
+        prepareDataFromAllYears();
+        renderAll();
+        setupTimelineHover();
+      })
+      .catch((err) => {
+        console.error("Ошибка загрузки данных", err);
+        showError(
+          'Не удалось загрузить данные. Проверьте файл "power_stats_all_years.json".'
+        );
+      });
+  }
 
   function showError(msg) {
     const yearStatsEl = document.getElementById("year-stats");
     if (yearStatsEl) yearStatsEl.textContent = msg;
   }
 
-  // ==== ПОДГОТОВКА ДАННЫХ ПО ВСЕМ ГОДАМ ====
-
   function loadLastUpdateLabel() {
-  const span = document.getElementById("last-updated");
-  if (!span) return;
+    const span = document.getElementById("last-updated");
+    if (!span) return;
 
-  fetch(LAST_UPDATE_FILE)
-    .then((resp) => {
-      if (!resp.ok) {
-        throw new Error("HTTP " + resp.status);
-      }
-      return resp.text();
-    })
-    .then((text) => {
-      // Пытаемся вытащить из строки хвост вида:
-      // 02.12.2025 21:49:00,38
-      const m = text.match(
-        /(\d{2}\.\d{2}\.\d{4}\s+\d{2}:\d{2}(:\d{2})?(?:[.,]\d+)?)\s*$/
-      );
-      if (m) {
-        // Заменим запятую на точку, чтобы смотрелось аккуратнее
-        span.textContent = m[1].replace(",", ".");
-      } else {
-        // Если формат когда-нибудь поменяем — просто покажем весь текст
-        span.textContent = text.trim();
-      }
-    })
-    .catch((err) => {
-      console.warn("Не удалось прочитать last_update.txt:", err);
-      span.textContent = "нет данных";
-    });
-}
-
+    fetch(LAST_UPDATE_FILE)
+      .then((resp) => {
+        if (!resp.ok) {
+          throw new Error("HTTP " + resp.status);
+        }
+        return resp.text();
+      })
+      .then((text) => {
+        const m = text.match(
+          /(\d{2}\.\d{2}\.\d{4}\s+\d{2}:\d{2}(:\d{2})?(?:[.,]\d+)?)\s*$/
+        );
+        if (m) {
+          span.textContent = m[1].replace(",", ".");
+        } else {
+          span.textContent = text.trim();
+        }
+      })
+      .catch((err) => {
+        console.warn("Не удалось прочитать last_update.txt:", err);
+        span.textContent = "нет данных";
+      });
+  }
 
   function prepareDataFromAllYears() {
     if (!rawAllData || !rawAllData.years) {
@@ -109,12 +100,10 @@ function init() {
       return;
     }
 
-    // По умолчанию – последний год с данными (у вас это 2025)
     currentYear = availableYears[availableYears.length - 1];
     determineDefaultMonthAndDayForCurrentYear();
   }
-
-  function buildYearData(year, yearRaw) {
+function buildYearData(year, yearRaw) {
     const dayMap = {};
     const daysRaw = yearRaw.days || {};
 
@@ -122,7 +111,7 @@ function init() {
     let totalOutages = 0;
     let daysWithOutages = 0;
 
-    const monthStats = {}; // m -> { outageCount, totalMinutes, daysWithOutages }
+    const monthStats = {};
 
     for (const [dateKey, dayRaw] of Object.entries(daysRaw)) {
       const date = new Date(dateKey + "T00:00:00");
@@ -236,6 +225,7 @@ function init() {
     renderYearSummary();
     renderMonths();
     renderCalendar();
+    renderHistogram();  // ДОБАВЛЕНО: рендер гистограммы
     renderDayDetail();
   }
 
@@ -247,7 +237,7 @@ function init() {
     const maxYearWithData =
       availableYears.length > 0 ? availableYears[availableYears.length - 1] : null;
 
-    for (let y = YEARS_START; y <= YEARS_END; y++) {
+    for (const y of availableYears) {
       const pill = document.createElement("div");
       pill.classList.add("year-pill");
       pill.dataset.year = String(y);
@@ -260,13 +250,34 @@ function init() {
       const meta = document.createElement("span");
       meta.classList.add("year-meta");
 
-      if (allYears[y]) {
+if (allYears[y]) {
         const ys = allYears[y].yearStats;
         const hoursText = formatHoursShort(ys.totalMinutes) + " ч";
         meta.textContent =
           `${formatAccidentPhrase(ys.totalOutages)} · ${hoursText}`;
+        
+        if (ys.totalMinutes > 0 || ys.totalOutages > 0) {
+          pill.classList.add("has-outages");
+        }
+        
         if (y === currentYear) pill.classList.add("active");
         pill.addEventListener("click", () => onYearSelected(y));
+        
+// Hover эффект - золотая рамка если есть отключения
+        if (ys.totalMinutes > 0 || ys.totalOutages > 0) {
+          pill.addEventListener("mouseenter", () => {
+            if (y !== currentYear) {
+              pill.style.borderColor = "#ffca6b";
+              pill.style.boxShadow = "0 0 0 1px rgba(255, 202, 107, 0.7)";
+            }
+          });
+          pill.addEventListener("mouseleave", () => {
+            if (y !== currentYear) {
+              pill.style.borderColor = "";
+              pill.style.boxShadow = "";
+            }
+          });
+        }
       } else if (maxYearWithData !== null && y > maxYearWithData) {
         pill.classList.add("future");
         meta.textContent = "будущий год";
@@ -292,6 +303,7 @@ function init() {
     renderYearSummary();
     renderMonths();
     renderCalendar();
+    renderHistogram();  // ДОБАВЛЕНО
     renderDayDetail();
   }
 
@@ -328,8 +340,7 @@ function init() {
       `Дней с отключениями: ${ys.daysWithOutages} · ` +
       `Без питания: ${hours.toFixed(1)} ч`;
   }
-
-  function renderMonths() {
+function renderMonths() {
     const strip = document.getElementById("month-strip");
     if (!strip) return;
     strip.innerHTML = "";
@@ -410,6 +421,7 @@ function init() {
 
     updateActiveMonthCard();
     renderCalendar();
+    renderHistogram();  // ДОБАВЛЕНО
     renderDayDetail();
   }
 
@@ -470,16 +482,14 @@ function init() {
 
     const firstDate = new Date(dataYear, currentMonth - 1, 1);
     const daysInMonth = new Date(dataYear, currentMonth, 0).getDate();
-    const firstWeekdayIndex = (firstDate.getDay() + 6) % 7; // Пн=0,...Вс=6
+    const firstWeekdayIndex = (firstDate.getDay() + 6) % 7;
 
-    // пустые до первого числа
     for (let i = 0; i < firstWeekdayIndex; i++) {
       const emptyCell = document.createElement("div");
       emptyCell.classList.add("calendar-day", "empty");
       grid.appendChild(emptyCell);
     }
 
-    // сами дни
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(dataYear, currentMonth - 1, day);
       const weekdayIndex = (date.getDay() + 6) % 7;
@@ -524,6 +534,21 @@ function init() {
       cell.addEventListener("click", () => {
         onDaySelected(dateKey);
       });
+      // Hover эффект на днях с отключениями
+      if (dayInfo && dayInfo.totalMinutes > 0) {
+        cell.addEventListener("mouseenter", () => {
+          if (currentDayKey !== dateKey) {
+            cell.style.borderColor = "rgba(255, 202, 107, 0.7)";
+            cell.style.boxShadow = "0 0 0 1px rgba(255, 202, 107, 0.5)";
+          }
+        });
+        cell.addEventListener("mouseleave", () => {
+          if (currentDayKey !== dateKey) {
+            cell.style.borderColor = "";
+            cell.style.boxShadow = "";
+          }
+        });
+      }
 
       grid.appendChild(cell);
     }
@@ -543,10 +568,283 @@ function init() {
       }
     });
 
+    // ДОБАВЛЕНО: Выделить столбик в гистограмме
+    highlightHistogramBar(dateKey);
+    
     renderDayDetail();
   }
 
-  function renderDayDetail() {
+  function getDaysInMonth(year, month) {
+    return new Date(year, month, 0).getDate();
+  }
+// ==== ГИСТОГРАММА ДНЕЙ МЕСЯЦА (НОВАЯ ФУНКЦИЯ) ====
+
+// ==== ГИСТОГРАММА ДНЕЙ МЕСЯЦА (НОВАЯ ФУНКЦИЯ) ====
+
+// ==== ГИСТОГРАММА ДНЕЙ МЕСЯЦА (SVG ВЕРСИЯ) ====
+
+  function renderHistogram() {
+    const chart = document.getElementById("histogram-chart");
+    if (!chart) return;
+    chart.innerHTML = "";
+
+    if (!currentMonth) return;
+
+    const dm = getDayMap();
+    const daysInMonth = getDaysInMonth(currentYear, currentMonth);
+
+    // Создаём SVG
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", "100%");
+    svg.setAttribute("height", "180");
+    svg.setAttribute("viewBox", `0 0 ${Math.max(daysInMonth * 30 + 50, 900)} 180`);
+    svg.setAttribute("preserveAspectRatio", "none");
+    svg.style.display = "block";
+
+    // Рисуем горизонтальные линии и цифры часов (0, 6, 12, 18, 24)
+    const scaleLabels = [0, 6, 12, 18, 24];
+    scaleLabels.forEach((hour) => {
+      const y = 170 - (hour / 24) * 150; // 150 = высота графика, 170 = отступ снизу
+
+      // Линия
+      // Линия (будет добавлена ПОСЛЕ столбиков)
+
+      // Цифра
+      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      text.setAttribute("x", "5");
+      text.setAttribute("y", y + 4);
+      text.setAttribute("fill", "#9ea5b3");
+      text.setAttribute("font-size", "10");
+      text.setAttribute("font-weight", "500");
+      text.textContent = hour;
+      svg.appendChild(text);
+    });
+
+    // Рисуем столбики для каждого дня
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(currentYear, currentMonth - 1, day);
+      const dateKey = formatDateKey(date);
+      const dayInfo = dm[dateKey];
+
+      const x = 50 + (day - 1) * 30; // позиция по X
+      const barWidth = 26; // ширина столбика
+
+      // Группа для столбика (для событий)
+      const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      group.setAttribute("data-date-key", dateKey);
+      group.style.cursor = "pointer";
+
+      // Фон столбика (рамка)
+      const bgRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      bgRect.setAttribute("x", x);
+      bgRect.setAttribute("y", 20);
+      bgRect.setAttribute("width", barWidth);
+      bgRect.setAttribute("height", 150);
+      bgRect.setAttribute("fill", "transparent");
+      bgRect.setAttribute("stroke", "transparent");
+      bgRect.setAttribute("stroke-width", "2");
+      bgRect.setAttribute("rx", "2");
+      group.appendChild(bgRect);
+
+      if (dayInfo && dayInfo.intervals && dayInfo.intervals.length > 0) {
+        // Есть отключения - строим сегменты
+        const dayStart = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        const dayEnd = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+
+        // Создаем массив минут (0-1439) со статусом
+        const minuteStatus = new Array(1440).fill(true);
+
+        dayInfo.intervals.forEach((interval) => {
+          let start = interval.start < dayStart ? dayStart : interval.start;
+          let end = interval.end > dayEnd ? dayEnd : interval.end;
+
+          const startMin = Math.floor((start - dayStart) / 60000);
+          const endMin = Math.ceil((end - dayStart) / 60000);
+
+          for (let m = startMin; m < endMin && m < 1440; m++) {
+            minuteStatus[m] = false;
+          }
+        });
+
+        // Собираем непрерывные сегменты
+        const segments = [];
+        let currentSegment = { start: 0, hasPower: minuteStatus[0] };
+
+        for (let m = 1; m < 1440; m++) {
+          if (minuteStatus[m] !== currentSegment.hasPower) {
+            segments.push({
+              start: currentSegment.start,
+              end: m,
+              hasPower: currentSegment.hasPower
+            });
+            currentSegment = { start: m, hasPower: minuteStatus[m] };
+          }
+        }
+        segments.push({
+          start: currentSegment.start,
+          end: 1440,
+          hasPower: currentSegment.hasPower
+        });
+
+        // Рендерим сегменты
+        let currentY = 170;
+        segments.forEach(seg => {
+          const durationMinutes = seg.end - seg.start;
+          const segmentHeight = (durationMinutes / 1440) * 150;
+
+          const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+          rect.setAttribute("x", x);
+          rect.setAttribute("y", currentY - segmentHeight);
+          rect.setAttribute("width", barWidth);
+          rect.setAttribute("height", segmentHeight);
+          rect.setAttribute("fill", seg.hasPower ? "#2e7d32" : "#d84315");
+          group.appendChild(rect);
+
+          currentY -= segmentHeight;
+        });
+
+      } else {
+        // Нет отключений - полностью зелёный
+        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rect.setAttribute("x", x);
+        rect.setAttribute("y", 20);
+        rect.setAttribute("width", barWidth);
+        rect.setAttribute("height", 150);
+        rect.setAttribute("fill", "#2e7d32");
+        group.appendChild(rect);
+      }
+
+// Если выходной - пишем СБ/ВС НАД столбиком справа
+      const dayOfWeek = date.getDay(); // 0=вс, 6=сб
+      if (dayOfWeek === 0 || dayOfWeek === 6) {
+        const weekendText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        weekendText.setAttribute("x", x + barWidth - 2);
+        weekendText.setAttribute("y", 15);
+        weekendText.setAttribute("fill", "#ffb74d");
+        weekendText.setAttribute("font-size", "9");
+        weekendText.setAttribute("font-weight", "600");
+        weekendText.setAttribute("text-anchor", "end");
+        weekendText.textContent = dayOfWeek === 0 ? "ВС" : "СБ";
+        group.appendChild(weekendText);
+      }
+      
+      // Число дня слева вверху
+      const dayText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      dayText.setAttribute("x", x + 3);
+      dayText.setAttribute("y", 30);
+      dayText.setAttribute("fill", "#f5f5f5");
+      dayText.setAttribute("font-size", "10");
+      dayText.setAttribute("font-weight", "500");
+      dayText.style.textShadow = "0 0 3px rgba(0,0,0,0.8)";
+      dayText.textContent = String(day);
+      group.appendChild(dayText);
+
+      // Выделение если текущий день
+      if (currentDayKey === dateKey) {
+        bgRect.setAttribute("stroke", "#ffca6b");
+        bgRect.setAttribute("stroke-width", "2");
+      }
+
+      // Tooltip (создаём foreignObject для HTML tooltip)
+      const tooltip = document.createElement("div");
+      tooltip.style.position = "absolute";
+      tooltip.style.padding = "4px 8px";
+      tooltip.style.background = "rgba(0, 0, 0, 0.9)";
+      tooltip.style.borderRadius = "4px";
+      tooltip.style.fontSize = "11px";
+      tooltip.style.color = "#f5f5f5";
+      tooltip.style.pointerEvents = "none";
+      tooltip.style.opacity = "0";
+      tooltip.style.transition = "opacity 0.2s";
+      tooltip.style.zIndex = "1000";
+      tooltip.style.whiteSpace = "nowrap";
+      
+      const hours = dayInfo ? (dayInfo.totalMinutes / 60).toFixed(1) : "0.0";
+      tooltip.textContent = `${hours} ч без питания`;
+      chart.appendChild(tooltip);
+
+      // События hover
+        group.addEventListener("mouseenter", (e) => {
+        bgRect.setAttribute("opacity", "0.8");
+        const rect = chart.getBoundingClientRect();
+        const groupRect = group.getBoundingClientRect();
+        tooltip.style.left = (groupRect.left - rect.left + barWidth / 2) + "px";
+        tooltip.style.top = (groupRect.bottom - rect.top + 8) + "px";
+        tooltip.style.transform = "translateX(-50%)";
+        tooltip.style.opacity = "1";
+      });
+
+      group.addEventListener("mouseleave", () => {
+        bgRect.setAttribute("opacity", "1");
+        tooltip.style.opacity = "0";
+      });
+
+      // Клик по столбику
+// Клик по столбику
+      group.addEventListener("click", () => {
+        if (dm[dateKey]) {
+          currentDayKey = dateKey;
+          
+          // Выделяем день в календаре
+          const cells = document.querySelectorAll(".calendar-day");
+          cells.forEach((cell) => {
+            if (cell.classList.contains("empty")) return;
+            const key = cell.dataset.dateKey;
+            if (key === dateKey) {
+              cell.classList.add("active");
+            } else {
+              cell.classList.remove("active");
+            }
+          });
+          
+          // Выделяем столбик в гистограмме
+          highlightHistogramBar(dateKey);
+          
+          // Показываем детализацию
+          renderDayDetail();
+        }
+      });
+
+      svg.appendChild(group);
+    }
+// Рисуем линии ПОВЕРХ столбиков
+    scaleLabels.forEach((hour) => {
+      const y = 170 - (hour / 24) * 150;
+      
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", "40");
+      line.setAttribute("y1", y);
+      line.setAttribute("x2", "100%");
+      line.setAttribute("y2", y);
+      line.setAttribute("stroke", "rgba(255, 255, 255, 0.3)");
+      line.setAttribute("stroke-width", "1");
+      line.style.pointerEvents = "none";
+      svg.appendChild(line);
+    });
+    chart.appendChild(svg);
+  }
+
+  // ДОБАВЛЕНО: Функция выделения столбика в гистограмме
+function highlightHistogramBar(dateKey) {
+  const chart = document.getElementById("histogram-chart");
+  if (!chart) return;
+  
+  const groups = chart.querySelectorAll("g[data-date-key]");
+  groups.forEach((group) => {
+    const rect = group.querySelector("rect"); // первый rect = фон с рамкой
+    const key = group.getAttribute("data-date-key");
+    
+    if (key === dateKey) {
+      rect.setAttribute("stroke", "#ffca6b");
+      rect.setAttribute("stroke-width", "2");
+    } else {
+      rect.setAttribute("stroke", "transparent");
+      rect.setAttribute("stroke-width", "2");
+    }
+  });
+}
+
+function renderDayDetail() {
     const titleEl = document.getElementById("day-title");
     const summaryEl = document.getElementById("day-summary");
     const noteEl = document.querySelector(".day-timeline-note");
@@ -758,8 +1056,7 @@ function init() {
       container.appendChild(seg);
     });
   }
-
-  // ==== УТИЛИТЫ ====
+// ==== УТИЛИТЫ ====
 
   function formatDateKey(date) {
     const y = date.getFullYear();
@@ -821,7 +1118,8 @@ function init() {
 
     return `${n} ${word}`;
   }
-    function setLastUpdatedFromHeader(lastModifiedHeader) {
+
+  function setLastUpdatedFromHeader(lastModifiedHeader) {
     const el = document.getElementById("last-updated");
     if (!el || !lastModifiedHeader) return;
 
