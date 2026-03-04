@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 
 # === НАСТРОЙКИ ===
-INPUT_FILE = "srv3_events_6005_6008_all.json"
+input_file = "srv3_events_6005_6008_all.json"
 OUTPUT_FILE = "power_stats_all_years.json"
 
 # сколько минут "допускать" между концом одной аварии и началом следующей,
@@ -213,8 +213,8 @@ def compute_global_stats(intervals, years_struct):
 
 
 def main():
-    print(f"Читаю события из {INPUT_FILE} ...")
-    events = load_events(INPUT_FILE)
+    print(f"Читаю события из {input_file} ...")
+    events = load_events(input_file)
 
     print("Строю интервалы по 6008 ...")
     raw_intervals = extract_intervals_from_events(events)
