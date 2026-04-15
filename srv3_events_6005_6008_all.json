@@ -1552,5 +1552,775 @@
     "source": "EventLog",
     "computer": "SRV3",
     "description": "Предыдущее завершение работы системы в 9:14:35 на 16.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-16T21:43:44",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-16T21:43:44",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:29:40 на 16.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-17T09:27:06",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-17T09:27:06",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 9:13:02 на 17.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-17T21:45:31",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-17T21:45:31",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:32:17 на 17.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-18T08:18:06",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-18T08:18:06",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 8:04:34 на 18.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-18T21:35:13",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-18T21:35:13",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:26:18 на 18.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-19T08:04:19",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-19T08:04:19",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 7:56:30 на 19.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-19T21:44:19",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-19T21:44:19",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:29:25 на 19.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-20T08:37:58",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-20T08:37:58",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 8:23:50 на 20.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-20T21:43:06",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-20T21:43:06",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:28:07 на 20.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-21T07:19:07",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-21T07:19:07",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 7:04:25 на 21.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-21T21:35:38",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-21T21:35:38",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:27:18 на 21.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-22T07:35:41",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-22T07:35:41",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 7:24:55 на 22.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-22T21:43:27",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-22T21:43:27",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:29:45 на 22.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-23T08:09:40",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-23T08:09:40",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 7:56:45 на 23.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-23T21:36:40",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-23T21:36:40",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:17:46 на 23.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-24T08:12:54",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-24T08:12:54",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 7:59:02 на 24.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-24T21:32:41",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-24T21:32:41",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:24:00 на 24.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-25T08:12:51",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-25T08:12:51",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 7:59:57 на 25.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-25T21:42:52",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-25T21:42:52",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:29:57 на 25.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-26T08:32:26",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-26T08:32:26",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 8:19:09 на 26.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-26T21:43:18",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-26T21:43:18",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:29:32 на 26.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-27T07:42:57",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-27T07:42:57",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 7:29:36 на 27.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-28T01:12:44",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-28T01:12:44",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 1:04:20 на 28.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-28T09:36:38",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-28T09:36:38",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 9:23:43 на 28.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-02-28T21:42:58",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-02-28T21:42:58",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:29:46 на 28.02.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-01T10:02:59",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-01T10:02:59",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 9:49:17 на 01.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-01T21:43:08",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-01T21:43:08",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:30:03 на 01.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-02T08:12:48",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-02T08:12:48",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 7:58:28 на 02.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-02T17:48:05",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-02T17:48:05",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 17:40:08 на 02.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-03T08:12:08",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-03T08:12:08",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 7:59:26 на 03.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-03T21:42:52",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-03T21:42:52",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:29:17 на 03.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-04T08:17:06",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-04T08:17:06",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 8:03:56 на 04.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-04T21:43:13",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-04T21:43:13",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:29:15 на 04.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-05T08:03:05",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-05T08:03:05",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 7:49:32 на 05.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-05T21:37:10",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-05T21:37:10",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:29:17 на 05.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-06T08:12:56",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-06T08:12:56",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 8:04:30 на 06.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-06T21:13:57",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-06T21:13:57",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 21:00:02 на 06.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-07T08:16:51",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-07T08:16:51",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 8:03:17 на 07.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-07T19:43:00",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-07T19:43:00",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 19:28:57 на 07.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-09T08:19:45",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-09T08:19:45",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 8:08:49 на 09.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-09T18:12:58",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-09T18:12:58",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 17:59:55 на 09.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-10T00:04:07",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-10T00:04:07",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 22:30:58 на 09.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-10T08:16:56",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-10T08:16:56",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 8:03:17 на 10.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-10T17:43:07",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-10T17:43:07",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 17:30:01 на 10.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-11T04:38:03",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-11T04:38:03",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 4:29:24 на 11.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-11T08:47:44",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-11T08:47:44",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 8:34:03 на 11.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-11T15:17:51",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-11T15:17:51",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 15:09:49 на 11.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-12T09:29:20",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-12T09:29:20",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 9:15:10 на 12.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-12T16:12:30",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-12T16:12:30",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 15:59:27 на 12.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-21T01:06:21",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-21T01:06:21",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 22:10:42 на 20.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-21T20:03:26",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-21T20:03:26",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 18:53:26 на 21.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-28T08:19:45",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-28T08:19:45",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 22:38:11 на 27.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-03-29T18:44:47",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-03-29T18:44:47",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 14:36:28 на 29.03.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-04-06T14:21:42",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-04-06T14:21:42",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 13:19:29 на 06.04.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-04-15T18:10:49",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-04-15T18:10:49",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 17:02:46 на 15.04.2026 было неожиданным."
   }
 ]
