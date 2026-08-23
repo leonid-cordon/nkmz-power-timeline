@@ -3582,5 +3582,47 @@
     "source": "EventLog",
     "computer": "SRV3",
     "description": "Предыдущее завершение работы системы в 10:49:42 на 20.08.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-08-21T11:50:43",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-08-21T11:50:43",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 11:30:26 на 21.08.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-08-21T15:07:02",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-08-21T15:07:02",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 14:52:56 на 21.08.2026 было неожиданным."
+  },
+  {
+    "datetime": "2026-08-24T01:57:45",
+    "event_id": 6005,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Запущена служба журнала событий."
+  },
+  {
+    "datetime": "2026-08-24T01:57:45",
+    "event_id": 6008,
+    "source": "EventLog",
+    "computer": "SRV3",
+    "description": "Предыдущее завершение работы системы в 1:11:19 на 24.08.2026 было неожиданным."
   }
 ]
